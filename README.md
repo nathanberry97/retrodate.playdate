@@ -1,6 +1,6 @@
 # retrodate.playdate
 
-![build](https://github.com/nathanberry97/retrodate.playdate/workflows/Build/badge.svg)
+![linting](https://github.com/nathanberry97/retrodate.playdate/actions/workflows/lintingPipeline.yml/badge.svg)
 
 > Collection of retro games for the Playdate handheld
 
@@ -19,5 +19,5 @@ Then, install the git hooks:
 pre-commit install
 ```
 
-Pre-commit hooks are being used for formatting the code and I'm using
-GitHub Actions for linting and testing.
+> Pre-commit hooks are being used for formatting and GitHub Actions are used
+> for linting and testing
