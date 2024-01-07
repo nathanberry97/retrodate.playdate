@@ -4,9 +4,12 @@
 
 > Collection of retro games for the Playdate handheld
 
-## Pre-commit and GitHub Actions
+## Linting and formatting
 
-To use the pre-commit hooks, install the pre-commit package:
+> Pre-commit hooks are being used for code formatting and GitHub Actions are
+> used for linting and testing
+
+To use the pre-commit hooks, install the pre-commit package and luarocks:
 
 ```bash
 pip install pre-commit
@@ -18,6 +21,3 @@ Then, install the git hooks:
 ```bash
 pre-commit install
 ```
-
-> Pre-commit hooks are being used for formatting and GitHub Actions are used
-> for linting and testing
