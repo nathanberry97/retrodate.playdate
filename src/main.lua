@@ -1,7 +1,9 @@
 import "CoreLibs/graphics"
 
-local pd<const> = playdate
-local gfx<const> = playdate.graphics
+-- LuaFormatter off
+local pd <const> = playdate
+local gfx <const> = playdate.graphics
+-- LuaFormatter on
 
 -- Player variables
 local playerX, playerY = 200, 120
@@ -10,6 +12,7 @@ local velocityX, velocityY = 0, 0
 
 -- Apple variables
 local appleX, appleY = math.random(0, 400), math.random(0, 240)
+local score = "0000"
 
 local function playerMovement()
     -- Player velocity
@@ -50,6 +53,15 @@ function pd.update()
     -- Draw the game state here
     gfx.fillRect(playerX, playerY, 10, 10)
     gfx.fillCircleAtPoint(appleX, appleY, 5)
+
+    -- Draw score border
+    gfx.fillRect(20, 5, 90, 20)
+    gfx.fillCircleAtPoint(20, 15, 10)
+    gfx.fillCircleAtPoint(110, 15, 10)
+
+    -- Draw score
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.drawText("*Score:* " .. score, 20, 7)
 
     -- Update player position
     playerMovement()
