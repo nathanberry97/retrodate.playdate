@@ -11,8 +11,9 @@ local playerSpeed = 3
 local velocityX, velocityY = 0, 0
 
 -- Apple variables
-local appleX, appleY = math.random(0, 400), math.random(0, 240)
-local score = "0000"
+local appleX, appleY = math.random(5, 395), math.random(35, 235)
+-- local score = "0000"
+local score = 0
 
 local function playerMovement()
     -- Player velocity
@@ -39,10 +40,35 @@ local function playerCollision()
         playerX = 0
     end
 
-    if playerY < 0 then
+    if playerY < 30 then
         playerY = 240
     elseif playerY > 240 then
-        playerY = 0
+        playerY = 30
+    end
+end
+
+local function socreBorder()
+    -- Draw top border
+    gfx.fillRect(0, 0, 400, 30)
+
+    -- Draw score border
+    gfx.setColor(gfx.kColorWhite)
+    gfx.fillRect(20, 5, 90, 20)
+    gfx.fillCircleAtPoint(20, 15, 10)
+    gfx.fillCircleAtPoint(110, 15, 10)
+    gfx.setColor(gfx.kColorBlack)
+
+    -- Display score
+    gfx.drawText("*Score:* " .. score, 20, 7)
+end
+
+local function playerCollisionApple()
+    -- Snake collision with apple
+    if playerX + 10 >= appleX and playerX - 10 <= appleX then
+        if playerY + 10 >= appleY and playerY - 10 <= appleY then
+            appleX, appleY = math.random(5, 395), math.random(35, 235)
+            score = score + 1
+        end
     end
 end
 
@@ -50,20 +76,15 @@ function pd.update()
     -- Update the game state here
     gfx.clear()
 
+    -- Draw score border
+    socreBorder()
+
     -- Draw the game state here
     gfx.fillRect(playerX, playerY, 10, 10)
     gfx.fillCircleAtPoint(appleX, appleY, 5)
 
-    -- Draw score border
-    gfx.fillRect(20, 5, 90, 20)
-    gfx.fillCircleAtPoint(20, 15, 10)
-    gfx.fillCircleAtPoint(110, 15, 10)
-
-    -- Draw score
-    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawText("*Score:* " .. score, 20, 7)
-
     -- Update player position
     playerMovement()
     playerCollision()
+    playerCollisionApple()
 end
