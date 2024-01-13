@@ -9,6 +9,7 @@ local gfx <const> = playdate.graphics
 local playerX, playerY = 200, 120
 local playerSpeed = 3
 local velocityX, velocityY = 0, 0
+local playerLength = {}
 
 -- Apple variables
 local appleX, appleY = math.random(5, 395), math.random(35, 235)
@@ -63,12 +64,27 @@ local function socreBorder()
 end
 
 local function playerCollisionApple()
-    -- Snake collision with apple
+    -- Player collision with apple
     if playerX + 10 >= appleX and playerX - 10 <= appleX then
         if playerY + 10 >= appleY and playerY - 10 <= appleY then
             appleX, appleY = math.random(5, 395), math.random(35, 235)
             score = score + 1
         end
+    end
+end
+
+local function drawPlayer()
+
+    -- LuaFormatter off
+    playerLength[#playerLength + 1] = { playerX, playerY }
+    -- LuaFormatter on
+
+    -- remove the first element if table is greater than score
+    if #playerLength > score + 1 then table.remove(playerLength, 1) end
+
+    -- draw player body
+    for i = 1, #playerLength do
+        gfx.fillRect(playerLength[i][1], playerLength[i][2], 10, 10)
     end
 end
 
@@ -80,7 +96,7 @@ function pd.update()
     socreBorder()
 
     -- Draw the game state here
-    gfx.fillRect(playerX, playerY, 10, 10)
+    drawPlayer()
     gfx.fillCircleAtPoint(appleX, appleY, 5)
 
     -- Update player position
