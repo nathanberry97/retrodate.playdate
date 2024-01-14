@@ -7,7 +7,8 @@
   "runtime.nonstandardSymbol": ["+=", "-=", "*=", "/="],
   "diagnostics.globals": [
     "playdate",
-    "json"
+    "json",
+    "Snake"
   ],
   "diagnostics.disable": ["redefined-local"],
   "diagnostics.neededFileStatus": {
