@@ -68,7 +68,7 @@ local function playerCollision()
     end
 end
 
-local function socreBorder()
+local function scoreBorder()
     -- Draw top border
     gfx.fillRect(0, 0, 400, 30)
 
@@ -81,21 +81,9 @@ local function socreBorder()
     gfx.drawText("*Score:* " .. score, 20, 7)
 end
 
-local function playerCollisionApple()
-    if playerX + 10 >= appleX and playerX - 10 <= appleX then
-        if playerY + 10 >= appleY and playerY - 10 <= appleY then
-            resetApple()
-            score = score + 1
-
-            if score % 20 == 0 and playerSpeed < 6 then
-                playerSpeed = playerSpeed + 1
-            end
-        end
-    end
-end
+local function drawApple() gfx.fillCircleAtPoint(appleX, appleY, 5) end
 
 local function drawPlayer()
-
     -- LuaFormatter off
     playerLength[#playerLength + 1] = { playerX, playerY }
     -- LuaFormatter on
@@ -122,13 +110,22 @@ local function drawPlayer()
     end
 end
 
-local function drawApple() gfx.fillCircleAtPoint(appleX, appleY, 5) end
+local function playerCollisionApple()
+    if playerX + 10 >= appleX and playerX - 10 <= appleX then
+        if playerY + 10 >= appleY and playerY - 10 <= appleY then
+            resetApple()
+            score = score + 1
 
--- function Snake:init() end
+            if score % 20 == 0 and playerSpeed < 6 then
+                playerSpeed = playerSpeed + 1
+            end
+        end
+    end
+end
 
 function Snake:update()
     -- Draw score border
-    socreBorder()
+    scoreBorder()
 
     -- Draw the game state here
     drawPlayer()

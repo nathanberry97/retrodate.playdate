@@ -7,9 +7,6 @@ local pd <const> = playdate
 local gfx <const> = playdate.graphics
 -- LuaFormatter on
 
--- Initialise Snake object
-Snake()
-
 function pd.update()
     -- Update the game state here
     gfx.clear()
