@@ -1,3 +1,5 @@
+[menu](./src/images/retrodate.png)
+
 # retrodate.playdate
 
 > Collection of retro games for the Playdate handheld
