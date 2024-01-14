@@ -1,4 +1,4 @@
-[menu](./src/images/retrodate.png)
+![menu](./src/images/retrodate.png)
 
 # retrodate.playdate
 
