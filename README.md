@@ -1,7 +1,5 @@
 # retrodate.playdate
 
-![linting](https://github.com/nathanberry97/retrodate.playdate/actions/workflows/lintingPipeline.yml/badge.svg)
-
 > Collection of retro games for the Playdate handheld
 
 ## Linting and formatting
