@@ -1,9 +1,9 @@
+class('Snake').extends()
+
 -- LuaFormatter off
 local pd <const> = playdate
 local gfx <const> = playdate.graphics
 -- LuaFormatter on
-
-class('Snake').extends()
 
 -- Player variables
 local playerX, playerY = 200, 120
@@ -18,7 +18,11 @@ local appleX, appleY = math.random(5, 395), math.random(35, 235)
 -- Score variables
 local score = 0
 
+-- Game over
+local gameOver = false
+
 local function gameOverScreen()
+    gameOver = true
     gfx.fillRect(0, 0, 400, 240)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawText("*Game Over*", 150, 100)
@@ -124,6 +128,9 @@ local function playerCollisionApple()
 end
 
 function Snake:update()
+    -- Check if game over if so reset game
+    if gameOver then gameOver = false end
+
     -- Draw score border
     scoreBorder()
 
@@ -137,4 +144,6 @@ function Snake:update()
 
     -- Apple collision with player head
     playerCollisionApple()
+
+    return gameOver
 end
