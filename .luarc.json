@@ -8,8 +8,8 @@
   "diagnostics.globals": [
     "playdate",
     "json",
-    "Snake",
-    "Menu"
+    "SceneManager",
+    "Snake"
   ],
   "diagnostics.disable": ["redefined-local"],
   "diagnostics.neededFileStatus": {

@@ -1,8 +1,7 @@
 import "CoreLibs/object"
 import "CoreLibs/graphics"
 import "CoreLibs/sprites"
-
-import "Menu/menu"
+import "SceneManager/sceneManager"
 
 -- LuaFormatter off
 local pd <const> = playdate
@@ -12,5 +11,5 @@ local gfx <const> = playdate.graphics
 function pd.update()
     -- Update the game state here
     gfx.clear()
-    Menu:update()
+    SceneManager:update()
 end

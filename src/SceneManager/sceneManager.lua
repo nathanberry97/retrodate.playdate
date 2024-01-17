@@ -1,6 +1,6 @@
 import "../Snake/snake"
 
-class('Menu').extends()
+class('SceneManager').extends()
 
 -- LuaFormatter off
 local pd <const> = playdate
@@ -28,7 +28,6 @@ local function menuUi()
         backgroundImage:draw(0, 0)
     end)
     gfx.sprite.update()
-
 end
 
 local function displayGames()
@@ -63,7 +62,7 @@ local function selectGame()
     if pd.buttonJustPressed(pd.kButtonA) then play = true end
 end
 
-function Menu:update()
+function SceneManager:update()
     if play ~= true then
         menuUi()
         displayGames()
