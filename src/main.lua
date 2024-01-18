@@ -1,6 +1,7 @@
 import "CoreLibs/object"
 import "CoreLibs/graphics"
-import "Snake/snake"
+import "CoreLibs/sprites"
+import "SceneManager/sceneManager"
 
 -- LuaFormatter off
 local pd <const> = playdate
@@ -10,7 +11,5 @@ local gfx <const> = playdate.graphics
 function pd.update()
     -- Update the game state here
     gfx.clear()
-
-    -- Start snake game
-    Snake:update()
+    SceneManager:update()
 end

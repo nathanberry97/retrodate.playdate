@@ -1,24 +1,28 @@
+class('Snake').extends()
+
 -- LuaFormatter off
 local pd <const> = playdate
 local gfx <const> = playdate.graphics
 -- LuaFormatter on
 
-class('Snake').extends()
-
 -- Player variables
-local playerX, playerY = 200, 120
+local playerX, playerY = 265, 110
 local playerSpeed = 3
 local velocityX, velocityY = 0, 0
 local playerLength = {}
 local playerAngle = 0
 
 -- Apple variables
-local appleX, appleY = math.random(5, 395), math.random(35, 235)
+local appleX, appleY = math.random(155, 380), math.random(20, 220)
 
 -- Score variables
 local score = 0
 
+-- Game over
+local gameOver = false
+
 local function gameOverScreen()
+    gameOver = true
     gfx.fillRect(0, 0, 400, 240)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawText("*Game Over*", 150, 100)
@@ -28,7 +32,7 @@ local function gameOverScreen()
 end
 
 local function resetPlayer()
-    playerX, playerY = 200, 120
+    playerX, playerY = 265, 110
     velocityX, velocityY = 0, 0
     score, playerAngle = 0, 0
     playerSpeed = 3
@@ -37,7 +41,7 @@ local function resetPlayer()
 end
 
 local function resetApple()
-    appleX, appleY = math.random(5, 395), math.random(35, 235)
+    appleX, appleY = math.random(155, 380), math.random(20, 220)
 end
 
 local function playerMovement()
@@ -61,7 +65,7 @@ local function playerMovement()
 end
 
 local function playerCollision()
-    if playerX < 0 or playerX > 400 or playerY < 30 or playerY > 240 then
+    if playerX < 145 or playerX > 390 or playerY < 10 or playerY > 230 then
         gameOverScreen()
         resetPlayer()
         resetApple()
@@ -69,16 +73,20 @@ local function playerCollision()
 end
 
 local function scoreBorder()
-    -- Draw top border
-    gfx.fillRect(0, 0, 400, 30)
-
-    -- Draw score border
+    -- Set background scene
+    gfx.setBackgroundColor(gfx.kColorBlack)
     gfx.setColor(gfx.kColorWhite)
-    gfx.fillRoundRect(10, 5, 95, 20, 10)
+    gfx.fillRoundRect(150, 15, 235, 210, 3)
+    gfx.drawLine(5, 15, 135, 15)
+    gfx.drawLine(5, 80, 135, 80)
     gfx.setColor(gfx.kColorBlack)
 
     -- Display score
-    gfx.drawText("*Score:* " .. score, 20, 7)
+    local original_draw_mode = gfx.getImageDrawMode()
+    gfx.setImageDrawMode(gfx.kDrawModeInverted)
+    gfx.drawText("*Score:* ", 15, 30)
+    gfx.drawText(score, 15, 50)
+    gfx.setImageDrawMode(original_draw_mode)
 end
 
 local function drawApple() gfx.fillCircleAtPoint(appleX, appleY, 5) end
@@ -92,16 +100,25 @@ local function drawPlayer()
 
     -- draw player body
     for i = 1, #playerLength do
-        gfx.fillRect(playerLength[i][1], playerLength[i][2], 10, 10)
+        local x = playerLength[i][1]
+        local y = playerLength[i][2]
+
+        gfx.fillRect(x, y, 10, 10)
 
         -- Apple collision with player body
-        if appleX == playerLength[i][1] and appleY == playerLength[i][2] then
-            resetApple()
+        if x + 5 >= appleX - 10 and x + 5 <= appleX + 10 then
+            if y + 5 >= appleY - 10 and y + 5 <= appleY + 10 then
+                resetApple()
+            end
         end
 
         -- Player collision with player body
         if #playerLength == i then break end
-        if playerX == playerLength[i][1] and playerY == playerLength[i][2] then
+
+        local rangeX = playerX <= x + 1 and playerX >= x - 1
+        local rangeY = playerY <= y + 1 and playerY >= y - 1
+
+        if rangeX and rangeY then
             gameOverScreen()
             resetPlayer()
             resetApple()
@@ -111,19 +128,36 @@ local function drawPlayer()
 end
 
 local function playerCollisionApple()
-    if playerX + 10 >= appleX and playerX - 10 <= appleX then
-        if playerY + 10 >= appleY and playerY - 10 <= appleY then
+    -- draw hit box around apple
+    gfx.setColor(gfx.kColorBlack)
+
+    -- Apple collision with player head
+    local lowetLeftX, lowetLeftY = appleX - 10, appleY - 10
+    local upperRightX, upperRightY = appleX + 10, appleY + 10
+
+    -- Player head center
+    local playerCenterX, playerCenterY = playerX + 5, playerY + 5
+
+    if playerCenterX >= lowetLeftX and playerCenterX <= upperRightX then
+        if playerCenterY >= lowetLeftY and playerCenterY <= upperRightY then
             resetApple()
             score = score + 1
 
-            if score % 20 == 0 and playerSpeed < 6 then
+            if score % 50 == 0 and playerSpeed < 5 then
                 playerSpeed = playerSpeed + 1
             end
         end
     end
+
+    -- Apple hit box
+    -- local diffX, diffY = upperRightX - lowetLeftX, upperRightY - lowetLeftY
+    -- gfx.drawRect(lowetLeftX, lowetLeftY, diffX, diffY)
 end
 
 function Snake:update()
+    -- Check if game over if so reset game
+    if gameOver then gameOver = false end
+
     -- Draw score border
     scoreBorder()
 
@@ -137,4 +171,6 @@ function Snake:update()
 
     -- Apple collision with player head
     playerCollisionApple()
+
+    return gameOver
 end
