@@ -9,7 +9,8 @@
     "playdate",
     "json",
     "SceneManager",
-    "Snake"
+    "Snake",
+    "Breakout"
   ],
   "diagnostics.disable": ["redefined-local"],
   "diagnostics.neededFileStatus": {

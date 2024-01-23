@@ -1,4 +1,5 @@
 import "../Snake/snake"
+import "../Breakout/breakout"
 
 class('SceneManager').extends()
 
@@ -8,8 +9,8 @@ local gfx <const> = playdate.graphics
 
 local games = {
     { name = "*Snake*", x = 180, y = 160, activeY = 158, game = Snake },
-    { name = "*Breakout*", x = 170, y = 185, activeY = 183, game = nil },
-    { name = "*Tetris*", x = 180, y = 210, activeY = 208, game = nil }
+    { name = "*Breakout*", x = 170, y = 185, activeY = 183, game = Breakout },
+    { name = "*Tetris*", x = 180, y = 210, activeY = 208, game = Snake }
 }
 -- LuaFormatter on
 
@@ -48,13 +49,13 @@ end
 
 local function switchGame()
     if pd.buttonJustPressed(pd.kButtonUp) and currentGame == games[2].name then
-        currentGame = games[1].name
+        currentGame, currentObject = games[1].name, games[1].game
     elseif pd.buttonJustPressed(pd.kButtonDown) and currentGame == games[1].name then
-        currentGame = games[2].name
+        currentGame, currentObject = games[2].name, games[2].game
     elseif pd.buttonJustPressed(pd.kButtonUp) and currentGame == games[3].name then
-        currentGame = games[2].name
+        currentGame, currentObject = games[2].name, games[2].game
     elseif pd.buttonJustPressed(pd.kButtonDown) and currentGame == games[2].name then
-        currentGame = games[3].name
+        currentGame, currentObject = games[3].name, games[3].game
     end
 end
 
