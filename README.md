@@ -4,6 +4,26 @@
 
 > Collection of retro games for the Playdate handheld
 
+## Build, run, and clean
+
+To build the project, run the following command:
+
+```bash
+make build
+```
+
+To run the project, run the following command:
+
+```bash
+make run
+```
+
+To clean the project, run the following command:
+
+```bash
+make clean
+```
+
 ## Linting and formatting
 
 > Pre-commit hooks are being used for code formatting
