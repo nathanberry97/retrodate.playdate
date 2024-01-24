@@ -64,13 +64,14 @@ local function selectGame()
 end
 
 function SceneManager:update()
-    if play ~= true then
-        menuUi()
-        displayGames()
-        switchGame()
-        selectGame()
-    else
-        local gameOver = currentObject:update()
-        if gameOver == true then play = false end
-    end
+    -- if play ~= true then
+    --     menuUi()
+    --     displayGames()
+    --     switchGame()
+    --     selectGame()
+    -- else
+    --     local gameOver = currentObject:update()
+    --     if gameOver == true then play = false end
+    -- end
+    Breakout:update()
 end
